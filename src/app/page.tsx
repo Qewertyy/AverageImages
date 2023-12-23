@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!startSearch) return;
+    if (!search) return alert("Please enter a search term");
     SearchImages(search, currentPage).then((res) => {
       setImages((prevImages) => [...prevImages, ...res]);
     });
