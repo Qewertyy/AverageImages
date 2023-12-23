@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { Component } from "react";
 
 export interface imageProps {
@@ -17,13 +18,13 @@ interface Props {
 export const ItemSection = ({ images: items }: Props) => {
   return (
     <div className="grid gap-4">
-      {items.map((item) => (
+      {items.map((item,index) => (
         <div
-        key={item.id}
+        key={item.id+index}
         onClick={() => window.open(item.url, "_blank")}
         className="flex justify-center items-center flex-col"
         >
-          <img
+          <Image
             className="h-auto max-w-full rounded-lg cursor-pointer hover:transform hover:scale-105 transition duration-300 ease-in-out pb-4"
             src={item.imageUrl}
             alt={item.title}
