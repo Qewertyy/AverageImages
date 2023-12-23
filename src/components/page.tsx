@@ -55,7 +55,7 @@ export default function Images({ images, query, started }: Props) {
               return acc;
             }, [])
             .map((group, index) => (
-              <ItemSection images={group} />
+              <ItemSection key={index} images={group} />
             ))}
         </div>
       </div>
