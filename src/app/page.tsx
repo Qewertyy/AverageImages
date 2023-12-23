@@ -58,6 +58,9 @@ export default function Home() {
           </svg>
         </button>
       </div>
+      {
+        startSearch && images.length == 0 && <p>Searching...</p>
+      }
       {images.length > 0 && (
         <>
           <Images images={images} query={search} started={startSearch} />
