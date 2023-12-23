@@ -21,7 +21,6 @@ export default function Home() {
 
   useEffect(() => {
     if (!startSearch) return;
-    if (!search) return alert("Please enter a search term");
     SearchImages(search, currentPage).then((res) => {
       setImages((prevImages) => [...prevImages, ...res]);
     });
@@ -40,7 +39,7 @@ export default function Home() {
         <button
           type="submit"
           className="absolute right-0 top-0 mt-4 mr-4"
-          onClick={() => setStartSearch(true)}
+          onClick={() => setStartSearch(search ? true : false)}
         >
           <svg
             className="text-gray-600 h-5 w-5 fill-current"
