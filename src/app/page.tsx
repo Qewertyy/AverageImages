@@ -29,6 +29,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-5 gap-5">
       <h1 className="text-3xl font-bold">AverageImages</h1>
+      <p>Select a Search Engine</p>
       <div className="flex items-center flex-row justify-center gap-5">
         <div className="flex items-center">
           <input
