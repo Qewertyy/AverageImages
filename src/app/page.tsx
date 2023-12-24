@@ -9,6 +9,7 @@ export default function Home() {
   const [startSearch, setStartSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [warning, setWarning] = useState(false);
+  const [engine, setEngine] = useState("google");
 
   const loadMoreImages = () => {
     if (warning) return alert("would you stop spamming bruv?");
@@ -21,13 +22,45 @@ export default function Home() {
 
   useEffect(() => {
     if (!startSearch) return;
-    SearchImages(search, currentPage).then((res) => {
+    SearchImages(search, engine, currentPage).then((res) => {
       setImages((prevImages) => [...prevImages, ...res]);
     });
   }, [startSearch, search, currentPage]);
   return (
     <main className="flex min-h-screen flex-col items-center pt-5 gap-5">
       <h1 className="text-3xl font-bold">AverageImages</h1>
+      <div className="flex items-center flex-row justify-center gap-5">
+        <div className="flex items-center">
+          <input
+            checked={engine == "google"}
+            id="googleBtn"
+            type="radio"
+            onChange={() => setEngine("google")}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="googleBtn"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Google
+          </label>
+        </div>
+        <div className="flex items-center">
+          <input
+            id="bingBtn"
+            checked={engine == "bing"}
+            type="radio"
+            onChange={() => setEngine("bing")}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+          <label
+            htmlFor="bingBtn"
+            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Bing
+          </label>
+        </div>
+      </div>
       <div className="pt-1 relative mx-auto text-gray-600">
         <input
           className="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-lg"
@@ -58,9 +91,7 @@ export default function Home() {
           </svg>
         </button>
       </div>
-      {
-        startSearch && images.length == 0 && <p>Searching...</p>
-      }
+      {startSearch && images.length == 0 && <p>Searching...</p>}
       {images.length > 0 && (
         <>
           <Images images={images} query={search} started={startSearch} />

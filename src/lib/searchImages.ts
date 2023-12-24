@@ -1,6 +1,6 @@
-export async function SearchImages(query:string,page :number = 0) {
+export async function SearchImages(query:string,searchEngine: string = "google",page :number = 0) {
     const response = await fetch(
-        `https://api.qewertyy.me/image-search/google/?query=${query}&page=${page}`,
+        `https://api.qewertyy.me/image-search/${searchEngine}/?query=${query}&page=${page}`,
         {
             method:'POST'
         }
