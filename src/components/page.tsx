@@ -20,7 +20,7 @@ export const ItemSection = ({ images: items }: Props) => {
       {items.map((item,index) => (
         <div
         key={item.id+index}
-        onClick={() => window.open(item.url, "_blank")}
+        onClick={() => window.open(item.imageUrl, "_blank")}
         className="flex justify-center items-center flex-col"
         >
           <img
