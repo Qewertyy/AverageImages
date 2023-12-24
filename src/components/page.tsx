@@ -28,13 +28,13 @@ export const ItemSection = ({ images: items }: Props) => {
             src={item.imageUrl}
             alt={item.title}
           />
-          <button
+          {/* <button
             onClick={() => window.open(item.imageUrl, "_blank")}
             type="button"
             className="text-black bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-white dark:hover:bg-black-700 hover:text-white dark:focus:ring-gray-700 dark:border-gray-700"
           >
             Download
-          </button>
+          </button> */}
         </div>
       ))}
     </div>
