@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Component } from "react";
 
 export interface imageProps {
@@ -24,7 +23,7 @@ export const ItemSection = ({ images: items }: Props) => {
         onClick={() => window.open(item.url, "_blank")}
         className="flex justify-center items-center flex-col"
         >
-          <Image
+          <img
             className="h-auto max-w-full rounded-lg cursor-pointer hover:transform hover:scale-105 transition duration-300 ease-in-out pb-4"
             src={item.imageUrl}
             alt={item.title}
