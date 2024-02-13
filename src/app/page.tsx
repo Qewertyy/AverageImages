@@ -3,6 +3,8 @@ import Images, { imageProps } from "@/components/page";
 import { SearchImages } from "@/lib/searchImages";
 import { useEffect, useState } from "react";
 
+export const runtime = 'edge';
+
 export default function Home() {
   const [images, setImages] = useState<imageProps[]>([]);
   const [search, setSearch] = useState("");
