@@ -1,20 +1,7 @@
 import React, { Component } from "react";
+import { imageProps, ItemProps } from "../lib/types";
 
-export interface imageProps {
-  id: string;
-  imageUrl: string;
-  title: string;
-  previewUrl: string;
-  url: string;
-}
-
-interface Props {
-  images: imageProps[];
-  query?: string;
-  started?: boolean;
-}
-
-export const ItemSection = ({ images: items }: Props) => {
+export const ItemSection = ({ images: items }: ItemProps) => {
   return (
     <div className="grid gap-4">
       {items.map((item,index) => (
@@ -40,13 +27,13 @@ export const ItemSection = ({ images: items }: Props) => {
     </div>
   );
 };
-export default function Images({ images, query, started }: Props) {
+export default function Images({ images, query, started }: ItemProps) {
   return (
     <div>
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {images
-            .reduce((acc: imageProps[][], item, index) => {
+            .reduce((acc: imageProps[][], item, index: number) => {
               if (index % 3 === 0) {
                 acc.push([]);
               }
