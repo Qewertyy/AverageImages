@@ -1,9 +1,33 @@
 "use client";
-import Images, { imageProps } from "@/components/page";
+import Images from "@/components/Images";
 import { SearchImages } from "@/lib/searchImages";
 import { useEffect, useState } from "react";
+import { imageProps, RadioBtnProps } from "@/lib/types";
 
-export const runtime = 'edge';
+const RadioButton = ({
+  id,
+  value,
+  checked,
+  onChange,
+  label,
+}: RadioBtnProps) => (
+  <div className="flex items-center">
+    <input
+      id={id}
+      type="radio"
+      value={value}
+      checked={checked}
+      onChange={onChange}
+      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+    />
+    <label
+      htmlFor={id}
+      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+    >
+      {label}
+    </label>
+  </div>
+);
 
 export default function Home() {
   const [images, setImages] = useState<imageProps[]>([]);
@@ -11,10 +35,11 @@ export default function Home() {
   const [startSearch, setStartSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [warning, setWarning] = useState(false);
-  const [engine, setEngine] = useState("google");
+  const [engine, setEngine] = useState<"google" | "bing">("google");
+  const [initialSearch, setInitialSearch] = useState(true); // Track initial search
 
   const loadMoreImages = () => {
-    if (warning) return alert("would you stop spamming bruv?");
+    if (warning) return alert("Would you stop spamming, please?");
     setWarning(true);
     setCurrentPage((prevPage) => prevPage + 1);
     setTimeout(() => {
@@ -24,45 +49,33 @@ export default function Home() {
 
   useEffect(() => {
     if (!startSearch) return;
+    if (initialSearch) {
+      setImages([]);
+      setInitialSearch(false); // Update initial search flag
+    }
     SearchImages(search, engine, currentPage).then((res) => {
       setImages((prevImages) => [...prevImages, ...res]);
     });
-  }, [startSearch, search, currentPage]);
+  }, [startSearch, search, currentPage, engine, initialSearch]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center pt-5 gap-5">
-      <h1 className="text-3xl font-bold">AverageImages</h1>
+    <main className="flex min-h-[80vh] flex-col items-center pt-5 gap-5 justify-center">
       <p>Select a Search Engine</p>
       <div className="flex items-center flex-row justify-center gap-5">
-        <div className="flex items-center">
-          <input
-            checked={engine == "google"}
-            id="googleBtn"
-            type="radio"
-            onChange={() => setEngine("google")}
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          />
-          <label
-            htmlFor="googleBtn"
-            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >
-            Google
-          </label>
-        </div>
-        <div className="flex items-center">
-          <input
-            id="bingBtn"
-            checked={engine == "bing"}
-            type="radio"
-            onChange={() => setEngine("bing")}
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          />
-          <label
-            htmlFor="bingBtn"
-            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >
-            Bing
-          </label>
-        </div>
+        <RadioButton
+          id="googleBtn"
+          value="google"
+          checked={engine === "google"}
+          onChange={() => setEngine("google")}
+          label="Google"
+        />
+        <RadioButton
+          id="bingBtn"
+          value="bing"
+          checked={engine === "bing"}
+          onChange={() => setEngine("bing")}
+          label="Bing"
+        />
       </div>
       <div className="pt-1 relative mx-auto text-gray-600">
         <input
@@ -75,7 +88,10 @@ export default function Home() {
         <button
           type="submit"
           className="absolute right-0 top-0 mt-4 mr-4"
-          onClick={() => setStartSearch(search ? true : false)}
+          onClick={() => {
+            setStartSearch(search ? true : false);
+            setInitialSearch(true); // Reset initial search flag on new search
+          }}
         >
           <svg
             className="text-gray-600 h-5 w-5 fill-current"
@@ -94,7 +110,7 @@ export default function Home() {
           </svg>
         </button>
       </div>
-      {startSearch && images.length == 0 && <p>Searching...</p>}
+      {startSearch && images.length === 0 && <p>Searching...</p>}
       {images.length > 0 && (
         <>
           <Images images={images} query={search} started={startSearch} />
@@ -110,3 +126,5 @@ export default function Home() {
     </main>
   );
 }
+
+export const runtime = "edge";
