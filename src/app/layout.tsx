@@ -39,7 +39,7 @@ export default function RootLayout({
           <a
             target="_blank"
             className=" text-blue-200 hover:underline"
-            href="https://github.com/Qewertyy/AverageNews"
+            href="https://github.com/Qewertyy/AverageImages"
           >
             Github
           </a>
