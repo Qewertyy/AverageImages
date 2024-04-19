@@ -29,7 +29,19 @@ export default function RootLayout({
         <meta name="renderer" content="webkit"/>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <p className="text-center mb-3">
+          Source -&gt;{" "}
+          <a
+            target="_blank"
+            className=" text-blue-200 hover:underline"
+            href="https://github.com/Qewertyy/AverageNews"
+          >
+            Github
+          </a>
+        </p>
+      </body>
     </html>
   )
 }
