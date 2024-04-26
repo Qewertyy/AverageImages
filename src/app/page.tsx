@@ -2,7 +2,7 @@
 import Images from "@/components/Images";
 import { SearchImages } from "@/lib/searchImages";
 import { useEffect, useState } from "react";
-import { imageProps, RadioBtnProps } from "../lib/types";
+import { imageProps, RadioBtnProps } from "@/lib/types";
 
 const RadioButton = ({
   id,
